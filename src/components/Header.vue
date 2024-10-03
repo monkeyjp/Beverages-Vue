@@ -1,8 +1,10 @@
 <script setup>
 import { computed } from "vue";
 import { RouterLink, useRoute } from "vue-router";
+import { useBeveragesStore } from "@/stores/beverages";
 
 const route = useRoute();
+const store = useBeveragesStore();
 
 const homePage = computed(() => route.name === "home");
 </script>
@@ -61,6 +63,13 @@ const homePage = computed(() => route.name === "home");
             class="p-3 w-full rounded-lg focus:outline-none"
           >
             <option value="">-- Select --</option>
+            <option
+              v-for="category in store.categories"
+              :key="category.strCategory"
+              :value="category.strCategory"
+            >
+              {{ category.strCategory }}
+            </option>
           </select>
         </div>
         <input
