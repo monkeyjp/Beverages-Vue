@@ -7,6 +7,10 @@ const route = useRoute();
 const store = useBeveragesStore();
 
 const homePage = computed(() => route.name === "home");
+
+const hanldeSubmit = () => {
+  store.getRecipes();
+};
 </script>
 
 <template>
@@ -38,6 +42,7 @@ const homePage = computed(() => route.name === "home");
       <form
         class="md:w-1/2 2xl:w-1/3 bg-orange-400 my-32 p-10 rounded-lg shadow space-y-6"
         v-if="homePage"
+        @submit.prevent="hanldeSubmit"
       >
         <div class="space-y-4">
           <label
@@ -50,6 +55,7 @@ const homePage = computed(() => route.name === "home");
             id="ingredient"
             class="p-3 w-full rounded-lg focus:outline-none"
             placeholder="Name or Ingredient: Ex. Vodka, Tequila, etc"
+            v-model="store.search.name"
           />
         </div>
         <div class="space-y-4">
@@ -61,6 +67,7 @@ const homePage = computed(() => route.name === "home");
           <select
             id="category"
             class="p-3 w-full rounded-lg focus:outline-none"
+            v-model="store.search.category"
           >
             <option value="">-- Select --</option>
             <option
