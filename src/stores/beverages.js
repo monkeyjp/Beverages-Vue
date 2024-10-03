@@ -25,6 +25,6 @@ export const useBeveragesStore = defineStore("beverages", () => {
 
 
     return {
-        categories, search, getRecipes
+        categories, search, getRecipes, recipes
     }
 })
