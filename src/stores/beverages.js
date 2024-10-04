@@ -12,6 +12,7 @@ export const useBeveragesStore = defineStore("beverages", () => {
     })
 
     const recipes = ref([])
+    const recipe = ref({})
 
     onMounted(async function () {
         const { data: { drinks } } = await APIService.getCategories()
@@ -26,12 +27,13 @@ export const useBeveragesStore = defineStore("beverages", () => {
 
     async function selectBeverage(id) {
         const { data: { drinks } } = await APIService.getRecipe(id)
+        recipe.value = drinks[0]
         modal.handleClickModal()
 
     }
 
 
     return {
-        categories, search, getRecipes, recipes, selectBeverage
+        categories, search, getRecipes, recipes, selectBeverage, recipe
     }
 })

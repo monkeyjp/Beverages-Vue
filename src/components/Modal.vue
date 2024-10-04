@@ -1,5 +1,6 @@
 <script setup>
 import { useModalStore } from "@/stores/modal";
+import { useBeveragesStore } from "@/stores/beverages";
 import {
   Dialog,
   DialogPanel,
@@ -9,6 +10,25 @@ import {
 } from "@headlessui/vue";
 
 const modal = useModalStore();
+const beverages = useBeveragesStore();
+
+const ingredientsFormater = () => {
+  const ingredientsDiv = document.createElement("DIV");
+
+  for (let i = 1; i <= 15; i++) {
+    if (beverages.recipe[`strIngredient${i}`]) {
+      const ingredient = beverages.recipe[`strIngredient${i}`];
+      const quantity = beverages.recipe[`strMeasure${i}`];
+
+      const ingredientQuantity = document.createElement("P");
+      ingredientQuantity.classList.add("text-lg", "text-gray-500");
+      ingredientQuantity.textContent = `${ingredient} - ${quantity}`;
+
+      ingredientsDiv.appendChild(ingredientQuantity);
+    }
+  }
+  return ingredientsDiv;
+};
 </script>
 
 <template>
@@ -44,7 +64,35 @@ const modal = useModalStore();
               class="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl sm:p-6"
             >
               <div>
-                <div class="mt-3"></div>
+                <div class="mt-3">
+                  <DialogTitle
+                    as="h3"
+                    class="text-gray-900 text-4xl font-extrabold my-5"
+                  >
+                    {{ beverages.recipe.strDrink }}
+                  </DialogTitle>
+                  <img
+                    :src="beverages.recipe.strDrinkThumb"
+                    :alt="'image of  ' + beverages.recipe.strDrink"
+                    class="mx-auto w-96"
+                  />
+                  <DialogTitle
+                    as="h3"
+                    class="text-gray-900 text-4xl font-extrabold my-5"
+                  >
+                    Ingridients and Quantities
+                  </DialogTitle>
+                  <div v-html="ingredientsFormater().outerHTML"></div>
+                  <DialogTitle
+                    as="h3"
+                    class="text-gray-900 text-4xl font-extrabold my-5"
+                  >
+                    Instructions
+                  </DialogTitle>
+                  <p class="text-lg text-gray-500">
+                    {{ beverages.recipe.strInstructions }}
+                  </p>
+                </div>
               </div>
               <div class="mt-5 sm:mt-6 flex justify-between gap-4">
                 <button
