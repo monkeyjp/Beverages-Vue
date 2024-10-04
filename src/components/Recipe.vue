@@ -1,4 +1,8 @@
 <script setup>
+import { useBeveragesStore } from "@/stores/beverages";
+
+const beverages = useBeveragesStore();
+
 defineProps({
   recipe: {
     type: Object,
@@ -21,6 +25,7 @@ defineProps({
       <button
         type="button"
         class="bg-orange-400 hover:bg-orange-300 mt-5 w-full p-3 font-bold text-white text-lg"
+        @click="beverages.selectBeverage(recipe.idDrink)"
       >
         See Recipe
       </button>

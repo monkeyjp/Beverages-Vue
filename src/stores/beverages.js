@@ -1,9 +1,10 @@
 import { ref, onMounted, reactive } from "vue";
 import { defineStore } from "pinia";
-import axios from "axios";
 import APIService from "@/services/APIService";
+import { useModalStore } from "./modal";
 
 export const useBeveragesStore = defineStore("beverages", () => {
+    const modal = useModalStore()
     const categories = ref([])
     const search = reactive({
         name: "",
@@ -23,8 +24,14 @@ export const useBeveragesStore = defineStore("beverages", () => {
 
     }
 
+    async function selectBeverage(id) {
+        const { data: { drinks } } = await APIService.getRecipe(id)
+        modal.handleClickModal()
+
+    }
+
 
     return {
-        categories, search, getRecipes, recipes
+        categories, search, getRecipes, recipes, selectBeverage
     }
 })
