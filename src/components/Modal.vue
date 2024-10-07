@@ -1,6 +1,7 @@
 <script setup>
 import { useModalStore } from "@/stores/modal";
 import { useBeveragesStore } from "@/stores/beverages";
+import { useFavoritesStore } from "@/stores/favorites";
 import {
   Dialog,
   DialogPanel,
@@ -11,6 +12,7 @@ import {
 
 const modal = useModalStore();
 const beverages = useBeveragesStore();
+const favorites = useFavoritesStore();
 
 const ingredientsFormater = () => {
   const ingredientsDiv = document.createElement("DIV");
@@ -101,6 +103,13 @@ const ingredientsFormater = () => {
                   @click="modal.handleClickModal()"
                 >
                   Close
+                </button>
+                <button
+                  type="button"
+                  class="w-full rounded bg-orange-600 p-3 font-bold uppercase text-white shadow hover:bg-orange-500"
+                  @click="favorites.handlClickFavorite()"
+                >
+                  {{ modal.buttonText }}
                 </button>
               </div>
             </DialogPanel>
