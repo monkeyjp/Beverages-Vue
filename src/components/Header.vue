@@ -2,13 +2,23 @@
 import { computed } from "vue";
 import { RouterLink, useRoute } from "vue-router";
 import { useBeveragesStore } from "@/stores/beverages";
+import { useNotificationStore } from "@/stores/notification";
 
 const route = useRoute();
 const store = useBeveragesStore();
+const notifications = useNotificationStore();
 
 const homePage = computed(() => route.name === "home");
 
 const hanldeSubmit = () => {
+  if (Object.values(store.search).includes("")) {
+    notifications.$patch({
+      text: "All fields are required",
+      show: true,
+      error: true,
+    });
+    return;
+  }
   store.getRecipes();
 };
 </script>
