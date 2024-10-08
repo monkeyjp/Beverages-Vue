@@ -10,7 +10,10 @@ const favorites = useFavoritesStore();
   <p v-if="favorites.noFavorites" class="my-10 text-center text-2xl">
     Your Favorites list is Empty
   </p>
-  <div class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 my-10 gap-10">
+  <div
+    v-else
+    class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 my-10 gap-10"
+  >
     <Recipe
       v-for="recipe in favorites.favorites"
       :recipe="recipe"
